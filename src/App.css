@@ -1,38 +1,502 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+  padding: 4% 0;
+}
+
+.text-bolder {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  color: black;
+  height: 40px;
+  align-items: center;
+  padding: 0 20px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li a.nav-item {
+  color: black;
+  text-decoration: none;
+  padding: 12px 40px;
+  transition: .5s ease;
+}
+
+nav ul li a.nav-item:hover {
+  background: gray;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 9;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.dropdown-item {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.dropdown-item a {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-item:hover {
+  padding: 10px;
+  background: gray;
+}
+
+.dropdown-item:hover a {
+  color: white;
+}
+
+.nav-links li:hover .dropdown-menu {
+  display: block;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  height: 20px;
+  justify-content: space-between;
+  position: relative;
+}
+
+.menu-toggle input {
+  position: absolute;
+  width: 40px;
+  height: 28px;
+  left: -5px;
+  top: -3px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: black;
+  border-radius: 3px;
+  transition: all .5s;
+}
+
+.menu-toggle span:nth-child(2) {
+  transform-origin: 0 0;
+}
+
+.menu-toggle span:last-child {
+  transform-origin: 0 100%;
+}
+
+.menu-toggle input:checked~span:nth-child(2) {
+  transform: rotate(45deg) translate(-1px, -1px);
+  border-color: black;
+}
+
+.menu-toggle input:checked~span:last-child {
+  transform: rotate(-45deg) translate(-1px, 0);
+  background-color: black;
+}
+
+.menu-toggle input:checked~span:nth-child(3) {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.hero {
+  position: relative;
+  height: 90vh;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-slide span {
+  max-width: 420px;
+  position: absolute;
+  top: 67%;
+  left: 15%;
+  transform: translateY(67%);
+  font-size: 18px;
+  line-height: 24px;
+  padding: 6px;
+  font-weight: bold;
+  color: white;
+  background: rgba(0, 0, 0, .5);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  padding: 16px;
+  border-radius: 100%;
+  border: 2px solid white;
+  transition: .5s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: white;
+  color: black !important;
+}
+
+.swiper-pagination-bullet {
+  height: 18px !important;
+  width: 18px !important;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 18px;
+  margin: 0 10px;
+  gap: 12px;
+  color: white;
+  transition: .6s linear;
+}
+
+.card.red:hover {
+  color: rgb(180, 65, 50);
+}
+
+.card.green:hover {
+  color: rgb(50, 180, 50);
+}
+
+.card.blue:hover {
+  color: rgb(50, 102, 180);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transition: .3s linear;
+  z-index: -1;
+}
+
+.card.red::before {
+  background: rgb(180, 65, 50);
+}
+
+.card.green::before {
+  background: rgb(50, 180, 50);
+}
+
+.card.blue::before {
+  background: rgb(50, 102, 180);
+}
+
+.card:hover:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+}
+
+.card.red:hover:before {
+  background: rgb(180, 65, 50);
+}
+
+.card.green:hover:before {
+  background: rgb(50, 180, 50);
+}
+
+.card.blue:hover:before {
+  background: rgb(50, 102, 180);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  transform: translateY(-50%);
+  border-width: 10px;
+  border-style: solid;
+}
+
+.card.red::after {
+  border-color: transparent transparent transparent rgb(180, 65, 50);
+}
+
+.card.green::after {
+  border-color: transparent transparent transparent rgb(50, 180, 50);
+}
+
+.card.blue::after {
+  border-color: transparent transparent transparent rgb(50, 102, 180);
+}
+
+.card:hover img {
+  border-radius: 100%;
+}
+
+.card.red:hover img {
+  background-color: rgb(180, 65, 50);
+}
+
+.card.green:hover img {
+  background-color: rgb(50, 180, 50);
+}
+
+.card.blue:hover img {
+  background-color: rgb(50, 102, 180);
+}
+
+.icon-md {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+section.testi div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+section.testi .card span {
+  font-weight: bold;
+}
+
+section.contact form {
+  width: 100%;
+  max-width: 400px;
+}
+
+section.contact form label {
+  display: block;
+  margin: 12px 0 6px 0;
+}
+
+section.contact form input, section.contact form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #555;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+section.contact form input:active, section.contact form textarea:active {
+  transform: scale(0.95);
+}
+
+section.contact form input:focus, section.contact form textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.error-text {
+  font-size: .75rem;
+  color: red;
+}
+
+section.contact button {
+  width: 100%;
+  position: relative;
+  padding: 12px 0;
+  border-radius: 8px;
+  margin: 12px 0;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  background-color: cadetblue;
+  transition: all 0.2s ease;
+}
+
+section.contact button:active {
+  transform: scale(0.95);
+}
+
+section.contact button:before,
+section.contact button:after {
+  position: absolute;
+  content: "";
+  width: 150%;
+  left: 50%;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: -1000;
+  background-repeat: no-repeat;
+}
+
+section.contact button:hover:before {
+  top: -70%;
+  background-image: radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, transparent 20%, cadetblue 20%, transparent 30%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, cadetblue 15%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+    10% 10%, 18% 18%;
+  background-position: 50% 120%;
+  animation: orangeTopBubbles 0.6s ease;
+}
+
+@keyframes orangeTopBubbles {
+  0% {
+    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+      40% 90%, 55% 90%, 70% 90%;
   }
-  to {
-    transform: rotate(360deg);
+
+  50% {
+    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+      50% 50%, 65% 20%, 90% 30%;
+  }
+
+  100% {
+    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+      50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+section.contact button:hover::after {
+  bottom: -70%;
+  background-image: radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, cadetblue 15%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%),
+    radial-gradient(circle, cadetblue 20%, transparent 20%);
+  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+  background-position: 50% 0%;
+  animation: blueBottomBubbles 0.6s ease;
+}
+
+@keyframes blueBottomBubbles {
+  0% {
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+      70% -10%, 70% 0%;
+  }
+
+  50% {
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+      105% 0%;
+  }
+
+  100% {
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+      110% 10%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  gap: 12px;
+  padding: 12px 0;
+  background-color: gray;
+}
+
+footer div img {
+  width: 20px;
+  margin: 0 6px 0 6px;
+  height: auto;
+}
+
+@media screen and (max-width: 840px) {
+  section.testi div {
+    margin-bottom: 4%;
+  }
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    transform: translateX(100%);
+    transition: all 1s;
+    opacity: 0;
+  }
+
+  .menu-toggle {
+    display: flex;
+    z-index: 2;
+  }
+
+  nav ul.slide {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 2;
+  }
+}
+
+@media (max-width: 500px) {
+  .swiper-slide span {
+    left: 0;
+    width: 100%;
   }
 }
